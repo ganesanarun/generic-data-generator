@@ -1,0 +1,38 @@
+plugins {
+    id 'application'
+    id 'java'
+    id("org.jsonschema2pojo") version "1.2.1"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.instancio:instancio-junit:2.9.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+}
+
+// https://github.com/joelittlejohn/jsonschema2pojo/tree/master/jsonschema2pojo-gradle-plugin
+jsonSchema2Pojo {
+    source = files("${project.rootDir}/app/src/main/resources")
+    includeGeneratedAnnotation = true
+    includeAdditionalProperties = false
+    targetPackage = 'demo'
+    targetDirectory = file("${project.buildDir}/generated-sources/js2p")
+}
+
+
+application {
+    mainClass = 'demo.JsonDataGenerator'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}

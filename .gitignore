@@ -1,0 +1,8 @@
+generated_data
+.idea
+.gradle
+.DS_Store
+app/build/
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
