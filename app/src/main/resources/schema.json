@@ -1,45 +1,70 @@
 {
+  "title": "StockUpdateRequest",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {
-    "id": {
-      "type": "integer"
+    "type": {
+      "type": "string",
+      "enum": ["STOCKS_UPDATED"]
     },
-    "name": {
+    "system": {
       "type": "string"
     },
-    "age": {
-      "type": "integer"
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
     },
-    "address": {
-      "type": "object",
-      "properties": {
-        "street": {
-          "type": "string"
-        },
-        "city": {
-          "type": "string"
-        }
-      }
-    },
-    "contacts": {
+    "items": {
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
-          "type": {
+          "id": {
             "type": "string"
           },
-          "value": {
+          "nodeCode": {
             "type": "string"
+          },
+          "supplyType": {
+            "type": "string",
+            "enum": ["ATP"]
+          },
+          "updateType": {
+            "type": "string",
+            "enum": ["ABSOLUTE", "ADJUSTMENT"]
+          },
+          "adjustmentType": {
+            "type": "string",
+            "enum": ["ADD", "SUBTRACT"],
+            "description": "Required only if 'updateType' is set to 'ADJUSTMENT'"
+          },
+          "quantity": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "unitOfMeasure": {
+                "type": "string",
+                "enum": ["UNITS"]
+              }
+            },
+            "required": ["value", "unitOfMeasure"]
+          },
+          "condition": {
+            "type": "string",
+            "enum": ["NEW"]
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
           }
-        }
+        },
+        "required": ["id", "nodeCode", "supplyType", "updateType", "quantity", "condition", "updatedAt"],
+        "additionalProperties": false
       }
-    },
-    "type": {
-      "type": "string"
-    },
-    "country": {
-      "type": "string"
     }
-  }
+  },
+  "required": ["type", "system", "generatedAt", "items"],
+  "additionalProperties": false
 }

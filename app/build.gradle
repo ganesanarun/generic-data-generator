@@ -9,8 +9,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.instancio:instancio-junit:2.9.0'
+    implementation 'org.instancio:instancio-junit:4.3.2'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.16.1'
+    implementation 'com.opencsv:opencsv:5.5.1'
 }
 
 // https://github.com/joelittlejohn/jsonschema2pojo/tree/master/jsonschema2pojo-gradle-plugin
@@ -20,6 +22,10 @@ jsonSchema2Pojo {
     includeAdditionalProperties = false
     targetPackage = 'demo'
     targetDirectory = file("${project.buildDir}/generated-sources/js2p")
+    useBigDecimals = true
+    useTitleAsClassname = true
+    dateTimeType = "java.time.ZonedDateTime"
+//    includeToString = false
 }
 
 
@@ -35,4 +41,7 @@ tasks.named('test') {
 java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
